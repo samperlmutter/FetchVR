@@ -1,0 +1,3 @@
+FetchMoveitJoints joints_input
+---
+RobotTrajectory[] trajectories
