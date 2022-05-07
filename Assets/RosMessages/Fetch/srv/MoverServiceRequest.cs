@@ -14,15 +14,18 @@ namespace RosMessageTypes.Fetch
         public override string RosMessageName => k_RosMessageName;
 
         public FetchMoveitJointsMsg joints_input;
+        public Geometry.PoseStampedMsg pose;
 
         public MoverServiceRequest()
         {
             this.joints_input = new FetchMoveitJointsMsg();
+            this.pose = new Geometry.PoseStampedMsg();
         }
 
-        public MoverServiceRequest(FetchMoveitJointsMsg joints_input)
+        public MoverServiceRequest(FetchMoveitJointsMsg joints_input, Geometry.PoseStampedMsg pose)
         {
             this.joints_input = joints_input;
+            this.pose = pose;
         }
 
         public static MoverServiceRequest Deserialize(MessageDeserializer deserializer) => new MoverServiceRequest(deserializer);
@@ -30,17 +33,20 @@ namespace RosMessageTypes.Fetch
         private MoverServiceRequest(MessageDeserializer deserializer)
         {
             this.joints_input = FetchMoveitJointsMsg.Deserialize(deserializer);
+            this.pose = Geometry.PoseStampedMsg.Deserialize(deserializer);
         }
 
         public override void SerializeTo(MessageSerializer serializer)
         {
             serializer.Write(this.joints_input);
+            serializer.Write(this.pose);
         }
 
         public override string ToString()
         {
             return "MoverServiceRequest: " +
-            "\njoints_input: " + joints_input.ToString();
+            "\njoints_input: " + joints_input.ToString() +
+            "\npose: " + pose.ToString();
         }
 
 #if UNITY_EDITOR

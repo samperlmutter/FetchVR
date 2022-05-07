@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using RosMessageTypes.Geometry;
 using RosMessageTypes.Fetch;
 using Unity.Robotics.ROSTCPConnector;
 using Unity.Robotics.ROSTCPConnector.ROSGeometry;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class TrajectoryPlanner : MonoBehaviour
 {
@@ -30,6 +32,12 @@ public class TrajectoryPlanner : MonoBehaviour
 
     // ROS Connector
     ROSConnection m_Ros;
+
+    private InputDevice controller;
+    private List<InputDevice> devices;
+    private InputDeviceCharacteristics rightControllerCharacteristics;
+
+    bool prevButtonVal = false;
 
     /// <summary>
     ///     Find all robot joints in Awake() and add them to the jointArticulationBodies array.
@@ -56,6 +64,35 @@ public class TrajectoryPlanner : MonoBehaviour
 
         m_RightGripper = m_Fetch.transform.Find(rightGripper).GetComponent<ArticulationBody>();
         m_LeftGripper = m_Fetch.transform.Find(leftGripper).GetComponent<ArticulationBody>();
+
+        devices = new List<InputDevice>();
+        rightControllerCharacteristics = InputDeviceCharacteristics.Right | InputDeviceCharacteristics.Controller;
+    }
+
+    void Update()
+    {
+        InputDevices.GetDevicesWithCharacteristics(rightControllerCharacteristics, devices);
+        if (devices.Count > 0)
+        {
+            controller = devices[0];
+        }
+
+        if (controller != null)
+        {
+            controller.TryGetFeatureValue(CommonUsages.primaryButton, out bool primaryButtonVal);
+            controller.TryGetFeatureValue(CommonUsages.devicePosition, out Vector3 pos);
+            
+            if (!prevButtonVal && primaryButtonVal)
+            {
+                PoseMsg pose = new PoseMsg();
+                pose.position.x = pos.z;
+                pose.position.y = -pos.x;
+                pose.position.z = pos.y;
+                PublishJoints(pose);
+                Debug.Log("pressed");
+            }
+            prevButtonVal = primaryButtonVal;
+        }
     }
 
     /// <summary>
@@ -110,12 +147,27 @@ public class TrajectoryPlanner : MonoBehaviour
     ///     Call the MoverService using the ROSConnection and if a trajectory is successfully planned,
     ///     execute the trajectories in a coroutine.
     /// </summary>
-    public void PublishJoints()
+    public void PublishJoints(PoseMsg pose)
     {
         var request = new MoverServiceRequest();
         request.joints_input = CurrentJointConfig();
 
+        PoseStampedMsg poseStamped = new PoseStampedMsg();
+        poseStamped.pose = pose;
+
+        DateTime UNIX_EPOCH = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+        TimeSpan unixEpoch = DateTime.Now.ToUniversalTime() - UNIX_EPOCH;
+        double ds = unixEpoch.TotalMilliseconds;
+        uint sec = (uint)(ds / 1000);
+
+        /*poseStamped.header.stamp.secs = sec;
+        poseStamped.header.stamp.nsecs = (uint)((ds / 1000 - sec) * 1e+9);*/
+        poseStamped.header.frame_id = "base_link";
+
+        request.pose = poseStamped;
+
         m_Ros.SendServiceMessage<MoverServiceResponse>(m_RosServiceName, request, TrajectoryResponse);
+        Debug.Log("published");
     }
 
     void TrajectoryResponse(MoverServiceResponse response)
