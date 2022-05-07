@@ -12,6 +12,7 @@ const _arrayDeserializer = _deserializer.Array;
 const _finder = _ros_msg_utils.Find;
 const _getByteLength = _ros_msg_utils.getByteLength;
 let FetchMoveitJoints = require('../msg/FetchMoveitJoints.js');
+let geometry_msgs = _finder('geometry_msgs');
 
 //-----------------------------------------------------------
 
@@ -24,6 +25,7 @@ class MoverServiceRequest {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
       this.joints_input = null;
+      this.pose = null;
     }
     else {
       if (initObj.hasOwnProperty('joints_input')) {
@@ -32,6 +34,12 @@ class MoverServiceRequest {
       else {
         this.joints_input = new FetchMoveitJoints();
       }
+      if (initObj.hasOwnProperty('pose')) {
+        this.pose = initObj.pose
+      }
+      else {
+        this.pose = new geometry_msgs.msg.PoseStamped();
+      }
     }
   }
 
@@ -39,6 +47,8 @@ class MoverServiceRequest {
     // Serializes a message object of type MoverServiceRequest
     // Serialize message field [joints_input]
     bufferOffset = FetchMoveitJoints.serialize(obj.joints_input, buffer, bufferOffset);
+    // Serialize message field [pose]
+    bufferOffset = geometry_msgs.msg.PoseStamped.serialize(obj.pose, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -48,11 +58,15 @@ class MoverServiceRequest {
     let data = new MoverServiceRequest(null);
     // Deserialize message field [joints_input]
     data.joints_input = FetchMoveitJoints.deserialize(buffer, bufferOffset);
+    // Deserialize message field [pose]
+    data.pose = geometry_msgs.msg.PoseStamped.deserialize(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
-    return 56;
+    let length = 0;
+    length += geometry_msgs.msg.PoseStamped.getMessageSize(object.pose);
+    return length + 56;
   }
 
   static datatype() {
@@ -62,17 +76,62 @@ class MoverServiceRequest {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return 'e098aa5123a505d98cf51c5fdba8fa47';
+    return 'cf858f0e302c1c84dd88255ac9fe40bc';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
     FetchMoveitJoints joints_input
+    geometry_msgs/PoseStamped pose
     
     ================================================================================
     MSG: fetch_msgs/FetchMoveitJoints
     float64[7] joints
+    
+    ================================================================================
+    MSG: geometry_msgs/PoseStamped
+    # A Pose with reference coordinate frame and timestamp
+    Header header
+    Pose pose
+    
+    ================================================================================
+    MSG: std_msgs/Header
+    # Standard metadata for higher-level stamped data types.
+    # This is generally used to communicate timestamped data 
+    # in a particular coordinate frame.
+    # 
+    # sequence ID: consecutively increasing ID 
+    uint32 seq
+    #Two-integer timestamp that is expressed as:
+    # * stamp.sec: seconds (stamp_secs) since epoch (in Python the variable is called 'secs')
+    # * stamp.nsec: nanoseconds since stamp_secs (in Python the variable is called 'nsecs')
+    # time-handling sugar is provided by the client library
+    time stamp
+    #Frame this data is associated with
+    string frame_id
+    
+    ================================================================================
+    MSG: geometry_msgs/Pose
+    # A representation of pose in free space, composed of position and orientation. 
+    Point position
+    Quaternion orientation
+    
+    ================================================================================
+    MSG: geometry_msgs/Point
+    # This contains the position of a point in free space
+    float64 x
+    float64 y
+    float64 z
+    
+    ================================================================================
+    MSG: geometry_msgs/Quaternion
+    # This represents an orientation in free space in quaternion form.
+    
+    float64 x
+    float64 y
+    float64 z
+    float64 w
     
     `;
   }
@@ -88,6 +147,13 @@ class MoverServiceRequest {
     }
     else {
       resolved.joints_input = new FetchMoveitJoints()
+    }
+
+    if (msg.pose !== undefined) {
+      resolved.pose = geometry_msgs.msg.PoseStamped.Resolve(msg.pose)
+    }
+    else {
+      resolved.pose = new geometry_msgs.msg.PoseStamped()
     }
 
     return resolved;
@@ -284,6 +350,6 @@ class MoverServiceResponse {
 module.exports = {
   Request: MoverServiceRequest,
   Response: MoverServiceResponse,
-  md5sum() { return 'ea8e98db066fadd6abd8cdaae927ced1'; },
+  md5sum() { return '52a2bd437a86fe11986eb188dd11aaf2'; },
   datatype() { return 'fetch_msgs/MoverService'; }
 };

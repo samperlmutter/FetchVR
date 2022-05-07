@@ -288,12 +288,6 @@ catkin_DIR:PATH=C:/opt/ros/noetic/x64/share/catkin/cmake
 cpp_common_DIR:PATH=C:/opt/ros/noetic/x64/share/cpp_common/cmake
 
 //Value Computed by CMake
-fetch_conn_BINARY_DIR:STATIC=C:/Users/Sam/Documents/Coding Projects/Unity/FetchVR/Assets/ros/build/fetch_conn
-
-//Value Computed by CMake
-fetch_conn_SOURCE_DIR:STATIC=C:/Users/Sam/Documents/Coding Projects/Unity/FetchVR/Assets/ros/src/fetch_conn
-
-//Value Computed by CMake
 fetch_msgs_BINARY_DIR:STATIC=C:/Users/Sam/Documents/Coding Projects/Unity/FetchVR/Assets/ros/build/fetch_msgs
 
 //Value Computed by CMake

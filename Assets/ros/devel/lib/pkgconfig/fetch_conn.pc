@@ -1,8 +1,0 @@
-prefix=C:/Users/Sam/Documents/Coding Projects/Unity/Robot Test/Assets/ros/devel
-
-Name: fetch_conn
-Description: Description of fetch_conn
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

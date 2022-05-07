@@ -66,7 +66,7 @@ fetch_msgs\CMakeFiles\geometry_msgs_generate_messages_py.dir\build: geometry_msg
 .PHONY : fetch_msgs\CMakeFiles\geometry_msgs_generate_messages_py.dir\build
 
 fetch_msgs\CMakeFiles\geometry_msgs_generate_messages_py.dir\clean:
-	cd C:\Users\Sam\DOCUME~1\CODING~1\Unity\FetchVR\Assets\ros\build\FETCH_~2
+	cd C:\Users\Sam\DOCUME~1\CODING~1\Unity\FetchVR\Assets\ros\build\FETCH_~1
 	$(CMAKE_COMMAND) -P CMakeFiles\geometry_msgs_generate_messages_py.dir\cmake_clean.cmake
 	cd C:\Users\Sam\DOCUME~1\CODING~1\Unity\FetchVR\Assets\ros\build
 .PHONY : fetch_msgs\CMakeFiles\geometry_msgs_generate_messages_py.dir\clean

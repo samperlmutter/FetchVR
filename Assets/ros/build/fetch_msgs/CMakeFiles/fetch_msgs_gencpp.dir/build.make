@@ -66,7 +66,7 @@ fetch_msgs\CMakeFiles\fetch_msgs_gencpp.dir\build: fetch_msgs_gencpp
 .PHONY : fetch_msgs\CMakeFiles\fetch_msgs_gencpp.dir\build
 
 fetch_msgs\CMakeFiles\fetch_msgs_gencpp.dir\clean:
-	cd C:\Users\Sam\DOCUME~1\CODING~1\Unity\FetchVR\Assets\ros\build\FETCH_~2
+	cd C:\Users\Sam\DOCUME~1\CODING~1\Unity\FetchVR\Assets\ros\build\FETCH_~1
 	$(CMAKE_COMMAND) -P CMakeFiles\fetch_msgs_gencpp.dir\cmake_clean.cmake
 	cd C:\Users\Sam\DOCUME~1\CODING~1\Unity\FetchVR\Assets\ros\build
 .PHONY : fetch_msgs\CMakeFiles\fetch_msgs_gencpp.dir\clean

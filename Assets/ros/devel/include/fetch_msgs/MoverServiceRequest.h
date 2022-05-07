@@ -16,6 +16,7 @@
 #include <ros/message_operations.h>
 
 #include <fetch_msgs/FetchMoveitJoints.h>
+#include <geometry_msgs/PoseStamped.h>
 
 namespace fetch_msgs
 {
@@ -25,10 +26,12 @@ struct MoverServiceRequest_
   typedef MoverServiceRequest_<ContainerAllocator> Type;
 
   MoverServiceRequest_()
-    : joints_input()  {
+    : joints_input()
+    , pose()  {
     }
   MoverServiceRequest_(const ContainerAllocator& _alloc)
-    : joints_input(_alloc)  {
+    : joints_input(_alloc)
+    , pose(_alloc)  {
   (void)_alloc;
     }
 
@@ -36,6 +39,9 @@ struct MoverServiceRequest_
 
    typedef  ::fetch_msgs::FetchMoveitJoints_<ContainerAllocator>  _joints_input_type;
   _joints_input_type joints_input;
+
+   typedef  ::geometry_msgs::PoseStamped_<ContainerAllocator>  _pose_type;
+  _pose_type pose;
 
 
 
@@ -66,7 +72,8 @@ return s;
 template<typename ContainerAllocator1, typename ContainerAllocator2>
 bool operator==(const ::fetch_msgs::MoverServiceRequest_<ContainerAllocator1> & lhs, const ::fetch_msgs::MoverServiceRequest_<ContainerAllocator2> & rhs)
 {
-  return lhs.joints_input == rhs.joints_input;
+  return lhs.joints_input == rhs.joints_input &&
+    lhs.pose == rhs.pose;
 }
 
 template<typename ContainerAllocator1, typename ContainerAllocator2>
@@ -99,12 +106,12 @@ struct IsMessage< ::fetch_msgs::MoverServiceRequest_<ContainerAllocator> const>
 
 template <class ContainerAllocator>
 struct IsFixedSize< ::fetch_msgs::MoverServiceRequest_<ContainerAllocator> >
-  : TrueType
+  : FalseType
   { };
 
 template <class ContainerAllocator>
 struct IsFixedSize< ::fetch_msgs::MoverServiceRequest_<ContainerAllocator> const>
-  : TrueType
+  : FalseType
   { };
 
 template <class ContainerAllocator>
@@ -123,12 +130,12 @@ struct MD5Sum< ::fetch_msgs::MoverServiceRequest_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "e098aa5123a505d98cf51c5fdba8fa47";
+    return "cf858f0e302c1c84dd88255ac9fe40bc";
   }
 
   static const char* value(const ::fetch_msgs::MoverServiceRequest_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xe098aa5123a505d9ULL;
-  static const uint64_t static_value2 = 0x8cf51c5fdba8fa47ULL;
+  static const uint64_t static_value1 = 0xcf858f0e302c1c84ULL;
+  static const uint64_t static_value2 = 0xdd88255ac9fe40bcULL;
 };
 
 template<class ContainerAllocator>
@@ -148,10 +155,55 @@ struct Definition< ::fetch_msgs::MoverServiceRequest_<ContainerAllocator> >
   static const char* value()
   {
     return "FetchMoveitJoints joints_input\n"
+"geometry_msgs/PoseStamped pose\n"
 "\n"
 "================================================================================\n"
 "MSG: fetch_msgs/FetchMoveitJoints\n"
 "float64[7] joints\n"
+"\n"
+"================================================================================\n"
+"MSG: geometry_msgs/PoseStamped\n"
+"# A Pose with reference coordinate frame and timestamp\n"
+"Header header\n"
+"Pose pose\n"
+"\n"
+"================================================================================\n"
+"MSG: std_msgs/Header\n"
+"# Standard metadata for higher-level stamped data types.\n"
+"# This is generally used to communicate timestamped data \n"
+"# in a particular coordinate frame.\n"
+"# \n"
+"# sequence ID: consecutively increasing ID \n"
+"uint32 seq\n"
+"#Two-integer timestamp that is expressed as:\n"
+"# * stamp.sec: seconds (stamp_secs) since epoch (in Python the variable is called 'secs')\n"
+"# * stamp.nsec: nanoseconds since stamp_secs (in Python the variable is called 'nsecs')\n"
+"# time-handling sugar is provided by the client library\n"
+"time stamp\n"
+"#Frame this data is associated with\n"
+"string frame_id\n"
+"\n"
+"================================================================================\n"
+"MSG: geometry_msgs/Pose\n"
+"# A representation of pose in free space, composed of position and orientation. \n"
+"Point position\n"
+"Quaternion orientation\n"
+"\n"
+"================================================================================\n"
+"MSG: geometry_msgs/Point\n"
+"# This contains the position of a point in free space\n"
+"float64 x\n"
+"float64 y\n"
+"float64 z\n"
+"\n"
+"================================================================================\n"
+"MSG: geometry_msgs/Quaternion\n"
+"# This represents an orientation in free space in quaternion form.\n"
+"\n"
+"float64 x\n"
+"float64 y\n"
+"float64 z\n"
+"float64 w\n"
 ;
   }
 
@@ -171,6 +223,7 @@ namespace serialization
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
       stream.next(m.joints_input);
+      stream.next(m.pose);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -192,6 +245,9 @@ struct Printer< ::fetch_msgs::MoverServiceRequest_<ContainerAllocator> >
     s << indent << "joints_input: ";
     s << std::endl;
     Printer< ::fetch_msgs::FetchMoveitJoints_<ContainerAllocator> >::stream(s, indent + "  ", v.joints_input);
+    s << indent << "pose: ";
+    s << std::endl;
+    Printer< ::geometry_msgs::PoseStamped_<ContainerAllocator> >::stream(s, indent + "  ", v.pose);
   }
 };
 

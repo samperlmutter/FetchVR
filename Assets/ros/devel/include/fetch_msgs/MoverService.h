@@ -40,7 +40,7 @@ template<>
 struct MD5Sum< ::fetch_msgs::MoverService > {
   static const char* value()
   {
-    return "ea8e98db066fadd6abd8cdaae927ced1";
+    return "52a2bd437a86fe11986eb188dd11aaf2";
   }
 
   static const char* value(const ::fetch_msgs::MoverService&) { return value(); }
