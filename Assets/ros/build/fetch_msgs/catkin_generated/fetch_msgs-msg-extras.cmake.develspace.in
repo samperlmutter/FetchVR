@@ -1,2 +1,0 @@
-set(fetch_msgs_MESSAGE_FILES "C:/Users/Sam/Documents/Coding Projects/Unity/FetchVR/Assets/ros/src/fetch_msgs/msg/FetchMoveitJoints.msg;C:/Users/Sam/Documents/Coding Projects/Unity/FetchVR/Assets/ros/src/fetch_msgs/msg/FetchTrajectory.msg;C:/Users/Sam/Documents/Coding Projects/Unity/FetchVR/Assets/ros/src/fetch_msgs/msg/RobotTrajectory.msg")
-set(fetch_msgs_SERVICE_FILES "C:/Users/Sam/Documents/Coding Projects/Unity/FetchVR/Assets/ros/src/fetch_msgs/srv/MoverService.srv")
